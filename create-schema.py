@@ -681,6 +681,19 @@ agg_rules(a, 'AggregationAggregateRule', ['sourceField', 'operation'], [
     {'sourceField': 'id', 'operation': 'count', 'targetField': 'availabilityCount'},
 ])
 
+print('== Asset ==')
+# Static files the page refers to (the header logo and the like), written by
+# deploy.py from the assets/ folder and served from /files/Asset/:id/file. The id
+# is derived from the path under assets/, so a redeploy overwrites the same record
+# and the URL never changes. World-readable; only the admin API key writes.
+m = model('Asset', 11, accessCreate='block', accessRead='allow',
+          accessUpdate='block', accessDelete='block')
+fields(m, 'Asset', [
+    {'name': 'name', 'type': S, 'max': 300},      # path under assets/
+    {'name': 'hash', 'type': S, 'max': 64},       # sha256 of the bytes; skips unchanged uploads
+    {'name': 'file', 'type': S, 'blob': True, 'max': 10000000},
+])
+
 print('\nAll models created/updated.')
 print('Deploy, then rebuild the aggregations to fill in existing Clinician records:')
 print("  curl -H \"Authorization:Bearer $(cat .saasufy-api-key)\" -XPOST "

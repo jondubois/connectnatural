@@ -486,7 +486,7 @@ should be deciding a refund.
 | `seed-categories.py` | Seeds the `Category` rows behind the `/browse` dropdowns and the profile topic list. Wipes and reseeds, so it is the source of truth for that table |
 | `seed-practitioners.py` | Seeds ten sample practitioners and their weekly availability, spread across regions, specialisations and times of day |
 | `dev-access.py` | Temporarily relaxes write access for local development; `restore` puts the real rules back |
-| `deploy.py` | Rewrites the dev URLs in `index.html` to the deployed URL and uploads it to Saasufy's file hosting. Minifies only if needed to stay under the API's 1,000,000-byte request-body limit, which base64 hits well before the field's own `max`; `--dry-run` reports without uploading |
+| `deploy.py` | Rewrites the dev URLs in `index.html` to the deployed URL and uploads it to Saasufy's file hosting. Minifies only if needed to stay under the API's 1,000,000-byte request-body limit, which base64 hits well before the field's own `max`; `--dry-run` reports without uploading. Files under `assets/` (except `assets/work-files/`) are uploaded first as `Asset` records, and each `assets/<path>` reference in the uploaded page is rewritten to the hosted `/files/Asset/:id/file` URL; the source keeps its relative paths |
 | `config.json` | Deployment target — the source file, the dev URL to replace and the `files/` URL the app is served from |
 | `.saasufy-api-key` | Saasufy admin credential (gitignored) |
 | `.saasufy-service-url` | Deployed Saasufy service endpoint |
