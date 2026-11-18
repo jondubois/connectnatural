@@ -62,9 +62,13 @@
   nav.main app-router > [slot=viewport]{display:flex;align-items:center;gap:8px 18px;flex-wrap:wrap}
   nav.main oauth-link,nav.main log-out,
   nav.main oauth-link > [slot=viewport]{display:flex;align-items:center}
-  @media(max-width:640px){
-    nav.main{margin-left:0;width:100%;gap:8px 14px}
-    nav.main app-router > [slot=viewport]{gap:8px 14px}
+  @media(max-width:711px){
+    .brand{width:100%;justify-content:center}
+    nav.main{margin-left:0;width:100%;gap:8px 14px;justify-content:space-between}
+    /* Flatten the auth wrappers so their links space out as peers of the others. */
+    nav.main app-router,nav.main app-router > [slot=viewport],
+    nav.main oauth-link,nav.main log-out,
+    nav.main oauth-link > [slot=viewport]{display:contents}
   }
 
   .devbar{background:var(--warn-soft);border-bottom:1px solid #eadfbc;color:var(--warn);
